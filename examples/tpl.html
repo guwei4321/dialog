@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>js简易模板</title>
+</head>
+
+<body>
+    <div id="result"></div>
+    <script data-main="../dist/common" src="http://static.youzi100.com/lib/requirejs/2.1.16/require.min.js"></script>
+    <script>
+    require(['lib/jquery', 'extend/laytpl'], function(jquery, laytpl) {
+        var _tpl = '<h3>{{ d.title }}</h3>' +
+            '<p class="intro">{{ d.intro }}</p>' +
+            '<ul>' +
+            '{{# for(var i = 0, len = d.list.length; i < len; i++){ }}' +
+            '<li>' +
+            '<span>{{ d.list[i].name }}</span>' +
+            '<span>所在城市：{{ d.list[i].city }}</span>' +
+            '</li>' +
+            '{{# } }}' +
+            '</ul>,'
+        _data = {
+                title: '前端圈',
+                intro: '一群码js的骚年，幻想改变世界，却被世界改变。',
+                list: [{
+                    name: '贤心',
+                    city: '杭州'
+                }, {
+                    name: '谢亮',
+                    city: '北京'
+                }, {
+                    name: '浅浅',
+                    city: '杭州'
+                }, {
+                    name: 'Dem',
+                    city: '北京'
+                }]
+            },
+            result = 'laytpl.render(_data)';
+        var tpl = laytpl(_tpl);
+        tpl.render(_data, function(result) {
+            console.log(result);
+        });
+
+        // $('#result').html(result);
+    })
+    </script>
+</body>
+
+</html>
