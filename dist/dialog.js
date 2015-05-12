@@ -1,17 +1,64 @@
-define(function() {
+define(['jquery', 'simpletpl'],function(jquery, tpl) {
     function Dialog(config) {
         this.config = $.extend(true, {
-            tilte: null,
-            content: null,
-            closeBtn: true,
-            mask: true,
-            width: 'auto',
-            height: 'auto',
-            maskClick: null,
-            callbcakElement: null
-        })
+            title: '', // 弹窗标题
+            body: '', // 弹窗主体
+            footer: '', // 弹窗底部
+            closeBtn: true, // 左上角关闭按钮
+            hasMask: true, // 是否显示遮罩层
+            mask: null, // 遮罩层
+            maskClick: true, // 遮罩层是否可点击
+            wrap: null, // 弹窗主体外层节点
+            classPrefix: 'ui-dialog', // 弹窗样式类名
+            width: 'auto', // 弹窗宽度
+            height: 'auto', // 弹窗高度
+            buttons: null, // 回调函数
+            container: $('body'), // 插入区域
+            tpl: {
+                mask: '<div class="ui-mask"></div>',
+                content: '<div class="ui-dialog-header">'+
+                            '<div class="ui-dialog-title">{{d.title}}</div>'+
+                            '{{# if(d.closeBtn) { }}'+
+                            '<div class="ui-dialog-close"><a class="ui-icon-dialog-close" href="javascript:;" title="关闭">X</a></div>'+
+                            '{{#} }}'+
+                        '</div>'+
+                        '<div class="ui-dialog-body">{{d.body}}</div>'+
+                        '<div class="ui-dialog-footer">{{d.footer}}</div>'
+            }
+        }, config);
     }
     $.extend(Dialog.prototype, {
+        render: function(){
 
+            var _config = this.config,
+                _tpl = _config.tpl,
+                _mask = _tpl.mask,
+                _content = tpl(_tpl.content).render(_config);
+
+
+            if (_config.hasMask){
+                _config.mask = $(_mask);
+                _config.mask.appendTo(_config.container);
+            }
+
+            _config.wrap = $('<div class="' + _config.classPrefix + '"></div>');
+            $(_content).appendTo(_config.wrap.appendTo(_config.container));
+
+        },
+        show: function(){
+            var _config = this.config;
+            _config.hasMask &&  _config.mask.css('display','block');
+            _config.wrap.css('display','block');
+        },
+        hide: function(){
+            var _config = this.config;
+
+            _config.hasMask &&  _config.mask.css('display','none');
+            _config.wrap.css('display','none');
+        },
+        destory: function(){
+
+        }
     })
+    return Dialog;
 })

@@ -55,8 +55,7 @@ define(function() {
      * @param  {[string]} tpl  [模板]
      */
     function _parse(tpl) {
-        var _this = this,
-            _open = exp('^' + config.open + '#', ''),
+        var _open = exp('^' + config.open + '#', ''),
             _close = exp(config.close + '$', '');
         tpl = tpl.replace(exp(config.open+'#'), config.open+'# ')
             .replace(exp(config.close + '}'), '} ' + config.close).replace(/\\/g, '\\\\').replace(/(?="|')/g, '\\')
