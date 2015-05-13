@@ -4,18 +4,22 @@
     <meta charset="UTF-8">
     <title>弹窗</title>
     <style>
+        /**{padding:0;margin:0;}*/
         .demo {width:200px; height:200px; background-color:#000;}
+        .container {position:relative; margin:20px; width:700px; height:400px; background-color:#eee;}
+        .box { position: absolute; width:50px; height:90px; border:1px solid #f00; background-color:#666;}
     </style>
 </head>
 <body>
+<p>文字</p><p>文字</p><p>文字</p><p>文字</p><p>文字</p><p>文字</p><p>文字</p><p>文字</p><p>文字</p><p>文字</p>
+<div id="container" class="container">
+    <div id="box-1" class="box">1</div>
+    <div id="box-2" class="box">2</div>
+    <div id="box-3" class="box">3</div>
+</div>
+<div id="box-4" class="box">4</div>
+<p>文字</p><p>文字</p><p>文字</p><p>文字</p><p>文字</p><p>文字</p>
 <script data-main="dist/common" src="dist/lib/require.js"></script>
-<p>文字</p>
-<p>文字</p>
-<p>文字</p>
-<p>文字</p>
-<p>文字</p>
-<div id="test-node1" class="demo">爹地</div>
-<div id="test-node2" class="demo">儿子</div>
 <script>
     require(['lib/jquery', 'dialog'], function(jquery, Dialog) {
 
@@ -28,7 +32,12 @@
     })
 
     require(['lib/jquery', 'position'], function(jquery, Position) {
-
+        Position({
+            my: 'right top',
+            at: '100% 100%',
+            // of: '#container',
+            son: '#box-3'
+        });
     })
 </script>
 </body>

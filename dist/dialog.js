@@ -1,6 +1,6 @@
 define(['jquery', 'simpletpl'],function(jquery, tpl) {
     function Dialog(config) {
-        this.config = $.extend(true, {
+        this.config = $.extend({}, {
             title: '', // 弹窗标题
             body: '', // 弹窗主体
             footer: '', // 弹窗底部
