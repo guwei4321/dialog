@@ -79,8 +79,6 @@ define(['jquery'], function(jquery) {
         var atOffset = posConverter(posSerialize(opts.at), atW, atH);
         var myOffset = posConverter(posSerialize(opts.my), myW, myH);
 
-        console.log( offsetParentPos )
-        console.log( atPos )
         $my.css({
             position: 'absolute',
             left: atOffset[0] - myOffset[0] + atPos.left - offsetParentPos.left,
