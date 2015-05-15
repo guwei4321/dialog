@@ -1,4 +1,4 @@
-define(['jquery', 'simpletpl'],function(jquery, tpl) {
+define(['jquery', 'simpletpl', 'position'],function(jquery, tpl, Position) {
     function Dialog(config) {
         this.config = $.extend({}, {
             title: '', // 弹窗标题
@@ -14,6 +14,10 @@ define(['jquery', 'simpletpl'],function(jquery, tpl) {
             height: 'auto', // 弹窗高度
             buttons: null, // 回调函数
             container: $('body'), // 插入区域
+            align: {
+                baseAlign: '50% 50%',
+                parentAlign: '50% 50%'
+            },
             tpl: {
                 mask: '<div class="ui-mask"></div>',
                 content: '<div class="ui-dialog-header">'+
@@ -43,6 +47,9 @@ define(['jquery', 'simpletpl'],function(jquery, tpl) {
 
             _config.wrap = $('<div class="' + _config.classPrefix + '"></div>');
             $(_content).appendTo(_config.wrap.appendTo(_config.container));
+            Position({
+                baseElement: '.'+_config.classPrefix
+            });
 
         },
         show: function(){

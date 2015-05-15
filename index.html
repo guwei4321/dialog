@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>弹窗</title>
+    <title>前端组件</title>
     <style>
-        /**{padding:0;margin:0;}*/
+        *{padding:0;margin:0;}
         .demo {width:200px; height:200px; background-color:#000;}
         .container {position:relative; margin:20px; width:700px; height:400px; background-color:#eee;}
         .box { position: absolute; width:50px; height:90px; border:1px solid #f00; background-color:#666;}
@@ -28,17 +28,17 @@
             body: '<li class="field-name"><div class="input-box"><label class="offer-guidance-tel" for="J_DialoagName">手机号：</label><input id="J_DialoagTelInput" class="dd-5 holder" maxlength="11" type="text" value="输入手机号可查报价"></div><a id="J_DialoagTelBtn" class="dd-6 btn-get-code" href="javascript:;">立即查看</a></li>'
         });
         dialog1.render();
-        dialog1.hide();
+        // dialog1.hide();
     })
 
-    require(['lib/jquery', 'position'], function(jquery, Position) {
-        Position({
-            my: 'right top',
-            at: '0 0',
-            // of: '#container',
-            son: '#box-3'
-        });
-    })
+    // require(['lib/jquery', 'position'], function(jquery, Position) {
+        // Position({
+        //     baseAlign: '50% 50%',
+        //     parentAlign: '50% 50%',
+        //     parentElement: '#container',
+        //     baseElement: '#box-4'
+        // });
+    // })
 </script>
 </body>
 </html>

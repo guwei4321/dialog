@@ -1,15 +1,33 @@
 define(['jquery'], function(jquery) {
 
-    // Default settings.
-    var defaults = {
-        my: 'center',
-        at: 'center',
-        of: null
-    };
+    /**
+     * [Position 定位]
+     * @param {[type]} opts [description]
+     */
+    function Position(opts){
+        opts = $.extend({}, {
+            baseAlign: '50% 50%', //
+            parentAlign: '50% 50%', //
+            parentElement: document.body, // 父元素，若为空，则为 body
+            baseElement: null // 需要定位的元素
+        }, opts);
 
+        var $baseElement = $(opts.baseElement),
+            $parentElement = $(opts.parentElement),
+            $parentPosition = $baseElement.offsetParent(),
+            parentElementPos = $parentElement.offset(),
+            offsetParentPos = $parentPosition.offset(),
+            parentElementOffset = posConverter(posSerialize(opts.parentAlign), $parentElement.outerWidth(), $parentElement.outerHeight()),
+            baseElementOffset = posConverter(posSerialize(opts.baseAlign), $baseElement.outerWidth(), $baseElement.outerHeight());
 
+        $baseElement.css({
+            position: 'absolute',
+            left: parentElementOffset[0] - baseElementOffset[0] + parentElementPos.left - offsetParentPos.left,
+            top: parentElementOffset[1] - baseElementOffset[1] + parentElementPos.top - offsetParentPos.top
+        });
+    }
 
-    // Normalize the my/at option value.
+    // 修正方位值
     // Examples:
     //   'center' => 'center center'
     //   'top' => 'center top'
@@ -57,33 +75,6 @@ define(['jquery'], function(jquery) {
 
     function integerNumber (n){
         return Math.ceil(n, 1);
-    }
-
-    function getOffsetParent (){
-
-    }
-
-    function Position(opts){
-        opts = $.extend({}, {
-            of: document.body
-        }, opts);
-        var $my = $(opts.son);
-        var $at = $(opts.of);
-        var $offsetParent = $my.offsetParent();
-        var myW = $my.outerWidth();
-        var myH = $my.outerHeight();
-        var atW = $at.outerWidth();
-        var atH = $at.outerHeight();
-        var atPos = $at.offset();
-        var offsetParentPos = $offsetParent.offset();
-        var atOffset = posConverter(posSerialize(opts.at), atW, atH);
-        var myOffset = posConverter(posSerialize(opts.my), myW, myH);
-
-        $my.css({
-            position: 'absolute',
-            left: atOffset[0] - myOffset[0] + atPos.left - offsetParentPos.left,
-            top: atOffset[1] - myOffset[1] + atPos.top - offsetParentPos.top
-        });
     }
 
     return Position;
