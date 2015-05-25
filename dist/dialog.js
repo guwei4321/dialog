@@ -14,6 +14,7 @@ define(['jquery', 'simpletpl', 'position'],function(jquery, tpl, Position) {
             height: 'auto', // 弹窗高度
             buttons: null, // 回调函数
             container: $('body'), // 插入区域
+            isFixed: false, // 是否固定定位
             align: {
                 baseAlign: '50% 50%',
                 parentAlign: '50% 50%'
@@ -47,9 +48,22 @@ define(['jquery', 'simpletpl', 'position'],function(jquery, tpl, Position) {
 
             _config.wrap = $('<div class="' + _config.classPrefix + '"></div>');
             $(_content).appendTo(_config.wrap.appendTo(_config.container));
-            Position({
-                baseElement: '.'+_config.classPrefix
-            });
+
+            if ( _config.isFixed ) {
+                Position({
+                    baseElement: _config.wrap,
+                    baseAlign: _config.align.baseAlign, //
+                    parentAlign: _config.align.parentAlign, //
+                    isSticky: true
+                });
+            } else {
+                Position({
+                    baseElement: _config.wrap,
+                    baseAlign: _config.align.baseAlign, //
+                    parentAlign: _config.align.parentAlign //
+                });
+            }
+
 
         },
         show: function(){
