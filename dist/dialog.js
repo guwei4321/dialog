@@ -9,7 +9,7 @@ define(['jquery', 'simpletpl', 'position'],function(jquery, tpl, Position) {
             mask: null, // 遮罩层
             maskClick: true, // 遮罩层是否可点击
             wrap: null, // 弹窗主体外层节点
-            classPrefix: 'ui-dialog', // 弹窗样式类名
+            classWrap: 'ui-dialog', // 弹窗样式类名
             width: 'auto', // 弹窗宽度
             height: 'auto', // 弹窗高度
             buttons: null, // 回调函数
@@ -33,7 +33,7 @@ define(['jquery', 'simpletpl', 'position'],function(jquery, tpl, Position) {
         }, config);
     }
     $.extend(Dialog.prototype, {
-        render: function(){
+        create: function(){
 
             var _config = this.config,
                 _tpl = _config.tpl,
@@ -46,7 +46,7 @@ define(['jquery', 'simpletpl', 'position'],function(jquery, tpl, Position) {
                 _config.mask.appendTo(_config.container);
             }
 
-            _config.wrap = $('<div class="' + _config.classPrefix + '"></div>');
+            _config.wrap = $('<div class="' + _config.classWrap + '"></div>');
             $(_content).appendTo(_config.wrap.appendTo(_config.container));
 
             if ( _config.isFixed ) {
@@ -63,7 +63,6 @@ define(['jquery', 'simpletpl', 'position'],function(jquery, tpl, Position) {
                     parentAlign: _config.align.parentAlign //
                 });
             }
-
 
         },
         show: function(){
