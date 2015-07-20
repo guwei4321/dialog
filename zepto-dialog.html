@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>前端组件</title>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+</head>
+<body>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<script src="dist/lib/require.js"></script>
+<script>
+    requirejs.config({
+        baseUrl: './dist',
+        paths: {
+            zepto: 'lib/zepto',
+            simpletpl: 'extend/simpletpl',
+            position: 'zepto.dialog/position',
+            mask: 'zepto.dialog/mask',
+            dialog: 'zepto.dialog/dialog'
+        }
+    })
+    require([ 'zepto', 'dialog', 'position'], function(zepto, Dialog, Position) {
+
+        var dialog1 = new Dialog({
+            isFixed: true,
+            title: '弹窗',
+            data: {
+                title: {
+                    text: '标题'
+                },
+                list: [{name: '贤心', city: '杭州'},  {name: '谢亮', city: '北京'}, {name: '浅浅', city: '杭州'}, {name: 'Dem', city: '北京'}]
+            },
+            tpl: {
+                mask: '<div class="ui-mask"></div>',
+                content: '<div class="ui-dialog-header">' +
+                    '<div class="ui-dialog-title">{{d.data.title.text}}</div>' +
+                    '</div>' +
+                    '<div class="ui-dialog-body">' +
+                    '{{# for(var i = 0, len = d.data.list.length; i < len; i++){ }}' +
+                        '<li>' +
+                            '<span>{{ d.data.list[i].name }}</span>' +
+                            '<span>所在城市：{{ d.data.list[i].city }}</span>' +
+                        '</li>' +
+                    '{{# } }}' +
+                    '</div>'+
+                    '<div class="ui-dialog-footer">{{d.footer}}</div>'
+            }
+        });
+        dialog1.setup();
+        // dialog1.hide();
+    })
+</script>
+</body>
+</html>

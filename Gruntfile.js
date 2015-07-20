@@ -24,6 +24,38 @@ module.exports = function(grunt) {
                     assetCacheBuster: false
                 }
             }
+        },
+        requirejs: {
+            options: {
+                baseUrl: 'dist/',
+                mainConfigFile: "dist/common.js",
+                banner: '/*! @Description:<%= pkg.name %> @Author:<%= pkg.author %> @Update:<%= grunt.template.today("yyyy-mm-dd") %> */\n',
+                wrap: true,
+                beautify: false, // 是否漂亮格式
+                mangle: false, // 是否短化变量
+                compress: true, // 是否压缩格式
+                optimize: 'uglify', // 压缩的方式 默认：uglify  其他：none
+                uglify: {
+                    toplevel: true,
+                    ascii_only: true,
+                    beautify: false,
+                    max_line_length: 1000,
+                    defines: {
+                        DEBUG: ['name', 'false']
+                    },
+                    no_mangle: true
+                },
+                sourceMap: ''
+            },
+            position: {
+                options: {
+                    mainConfigFile: "dist/common.js",
+                    name: "position",
+                    // exclude: ["comboData"],
+                    include: ["common", "position"],
+                    out: "build/static/position.js"
+                }
+            }
         }
     });
 

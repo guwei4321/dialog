@@ -1,6 +1,15 @@
-define(['jquery'], function(jquery) {
-
-
+(function(root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD
+        define(['zepto'], factory);
+    } else if (typeof exports === 'object') {
+        // Node, CommonJS之类的
+        module.exports = factory(require('zepto'));
+    } else {
+        // 浏览器全局变量(root 即 window)
+        root.returnExports = factory(root.Zepto);
+    }
+}(this, function(zepto) {
     var win = $(window),
         doc = $(document),
         ua = (window.navigator.userAgent || "").toLowerCase(),
@@ -8,10 +17,10 @@ define(['jquery'], function(jquery) {
         isIE6 = ua.indexOf("msie 6") !== -1;
 
     /**
-     * [Position 定位]
+     * [position 定位]
      * @param {[type]} opts [description]
      */
-    function Position(opts) {
+    function position(opts) {
         opts = $.extend({}, {
             baseAlign: '50% 50%', //
             parentAlign: '50% 50%', //
@@ -20,35 +29,31 @@ define(['jquery'], function(jquery) {
             baseElement: null // 需要定位的元素
         }, opts);
 
-        var $baseElement = $(opts.baseElement),
-            $parentElement = opts.isSticky === true ? win : $(opts.parentElement),
-            $parentPosition = $baseElement.offsetParent(),
-            parentElementPos = $parentElement.offset(),
-            offsetParentPos = $parentPosition.offset(),
-            parentElementOffset = posConverter(posSerialize(opts.parentAlign), $parentElement.outerWidth(), $parentElement.outerHeight()),
-            baseElementOffset = posConverter(posSerialize(opts.baseAlign), $baseElement.outerWidth(), $baseElement.outerHeight())
-
+        var $elBase = $(opts.baseElement),
+            $elParent = opts.isSticky === true ? win : $(opts.parentElement),
+            parentElementOffset = posConverter(opts.parentAlign, $elParent.width(), $elParent.height()),
+            baseElementOffset = posConverter(opts.baseAlign, $elBase.width(), $elBase.height())
 
         if (opts.isSticky === true) {
-
             if (isIE6) {
 
                 _reset();
                 win.on('scroll resize', debounce(function() {
-                    var _timer = setTimeout(function(){
+                    var _timer = setTimeout(function() {
                         _reset();
                         clearTimeout(_timer);
                     }, 100);
                 }))
-                function _reset (){
-                    $baseElement.css({
+
+                function _reset() {
+                    $elBase.css({
                         position: 'absolute',
                         left: doc.scrollLeft() + parentElementOffset[0] - baseElementOffset[0],
-                        top: doc.scrollTop() +  parentElementOffset[1] - baseElementOffset[1]
+                        top: doc.scrollTop() + parentElementOffset[1] - baseElementOffset[1]
                     });
                 }
             } else {
-                $baseElement.css({
+                $elBase.css({
                     position: 'fixed',
                     left: parentElementOffset[0] - baseElementOffset[0],
                     top: parentElementOffset[1] - baseElementOffset[1]
@@ -56,72 +61,40 @@ define(['jquery'], function(jquery) {
             }
 
         } else {
-            $baseElement.css({
+            var $elParentOffset = $elBase.offsetParent(), // 取得最近属性为 relative/absolute/fixed 的 祖先元素
+                parentPos = $elParent.offset(),
+                parentOffsetPos = $elParentOffset.offset();
+
+            $elBase.css({
                 position: 'absolute',
-                left: parentElementOffset[0] - baseElementOffset[0] + parentElementPos.left - offsetParentPos.left,
-                top: parentElementOffset[1] - baseElementOffset[1] + parentElementPos.top - offsetParentPos.top
+                left: parentElementOffset[0] - baseElementOffset[0] + parentPos.left - parentOffsetPos.left,
+                top: parentElementOffset[1] - baseElementOffset[1] + parentPos.top - parentOffsetPos.top
             });
         }
 
     }
 
-    function now(){
+    function now() {
         Date.now || function() {
             return new Date().getTime();
         };
     }
 
 
-    function insertCSS (rule) {
+    function insertCSS(rule) {
         if (document.styleSheets && document.styleSheets.length) {
             try {
-             document.styleSheets[0].insertRule(rule, 0);
-            }
-            catch (ex) {
+                document.styleSheets[0].insertRule(rule, 0);
+            } catch (ex) {
                 // console.warn(ex.message, rule);
             }
-        }
-        else {
+        } else {
             var style = document.createElement("style");
             style.innerHTML = rule;
             document.head.appendChild(style);
         }
         return;
     }
-
-    // 高频率防抖
-    function debounce(func, wait, immediate) {
-        var timeout, args, context, timestamp, result;
-
-        var later = function() {
-            var last = now() - timestamp;
-
-            if (last < wait && last >= 0) {
-                timeout = setTimeout(later, wait - last);
-            } else {
-                timeout = null;
-                if (!immediate) {
-                    result = func.apply(context, args);
-                    if (!timeout) context = args = null;
-                }
-            }
-        };
-
-        return function() {
-            context = this;
-            args = arguments;
-            timestamp = now();
-            var callNow = immediate && !timeout;
-            if (!timeout) timeout = setTimeout(later, wait);
-            if (callNow) {
-                result = func.apply(context, args);
-                context = args = null;
-            }
-
-            return result;
-        };
-    }
-
 
     // 修正方位值
     // Examples:
@@ -146,24 +119,36 @@ define(['jquery'], function(jquery) {
     // 计算像素值
     function posConverter(posItems, width, height) {
         var pos = [0, 0],
-            sizes = [width, height];
+            sizes = [width, height],
+            posItemsSerialize = posSerialize(posItems);
 
-        for (var i = 0; i < posItems.length; i++) {
+        for (var i = 0; i < posItemsSerialize.length; i++) {
 
-            if (/\w/.test(posItems[i])) {
-                posItems[i] = posItems[i].replace(/(?:top|left)/gi, '0%')
+            if (/\w/.test(posItemsSerialize[i])) {
+                posItemsSerialize[i] = posItemsSerialize[i].replace(/(?:top|left)/gi, '0%')
                     .replace(/center/gi, '50%')
                     .replace(/(?:bottom|right)/gi, '100%');
             }
 
-            if (posItems[i].indexOf('%') !== -1) {
-                posItems[i].replace(/(\d+(?:\.\d+)?)%/gi, function(match, p1) {
+            if (posItemsSerialize[i].indexOf('%') !== -1) {
+                posItemsSerialize[i].replace(/(\d+(?:\.\d+)?)%/gi, function(match, p1) {
                     pos[i] += integerNumber(sizes[i] * toNumber(p1) / 100);
                 });
             }
         }
         return pos;
     };
+
+    function getElementTop(element){
+        var actualTop = element.offsetTop;
+        var current = element.offsetParent;
+        while(current!==null){
+            actualTop +=current.offsetTop;
+            current = current.offsetParent;
+        }
+        return actualTop;
+    }
+
 
     function toNumber(s) {
         return parseFloat(s, 10) || 0;
@@ -173,6 +158,12 @@ define(['jquery'], function(jquery) {
         return Math.ceil(n, 1);
     }
 
-    return Position;
+    return position;
 
-})
+}));
+
+
+    // define(['jquery'], function(jquery) {
+
+    // return position;
+    // })

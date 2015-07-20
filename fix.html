@@ -26,42 +26,24 @@
 <p>文字</p><p>文字</p><p>文字</p><p>文字</p><p>文字</p><p>文字</p>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <script src="dist/lib/require.js"></script>
+<script src="build/static/position.js"></script>
 <script>
-    requirejs.config({
-        baseUrl: './dist',
-        paths: {
-            jquery: 'lib/jquery',
-            simpletpl: 'extend/simpletpl',
-            position: 'jquery.dialog/position',
-            mask: 'jquery.dialog/mask',
-            dialog: 'jquery.dialog/dialog'
-        }
-    })
-    require([ 'lib/jquery', 'dialog', 'position'], function(jquery, Dialog, Position) {
+    // require(['lib/jquery', 'dialog', 'position'], function(jquery, Dialog, Position) {
 
-        var dialog1 = new Dialog({
-            isFixed: true,
-            title: '弹窗',
-            body: '<li class="field-name"><div class="input-box"><label class="offer-guidance-tel" for="J_DialoagName">手机号：</label><input id="J_DialoagTelInput" class="dd-5 holder" maxlength="11" type="text" value="输入手机号可查报价"></div><a id="J_DialoagTelBtn" class="dd-6 btn-get-code" href="javascript:;">立即查看</a></li>',
-            buttons: {
-                '取消': function(){
-                    this.close();
-                },
-                '确定': function(){
-                    this.close();
-                }
-            }
-        });
-        dialog1.setup();
-        // dialog1.hide();
-    })
+    //     var dialog1 = new Dialog({
+    //         isFixed: true,
+    //         title: '弹窗',
+    //         body: '<li class="field-name"><div class="input-box"><label class="offer-guidance-tel" for="J_DialoagName">手机号：</label><input id="J_DialoagTelInput" class="dd-5 holder" maxlength="11" type="text" value="输入手机号可查报价"></div><a id="J_DialoagTelBtn" class="dd-6 btn-get-code" href="javascript:;">立即查看</a></li>'
+    //     });
+    //     dialog1.create();
+    //     // dialog1.hide();
+    // })
 
-    require(['lib/jquery', 'position'], function(jquery, Position) {
+    require(['jquery', 'position'], function(jquery, Position) {
         Position({
             baseAlign: '50% 50%',
             parentAlign: '50% 50%',
-            isSticky: false,
-            // parentElement: '#container',
+            parentElement: '#container',
             baseElement: '#box-4'
         });
     })
