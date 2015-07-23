@@ -66,8 +66,6 @@
 
             $(_content).appendTo(this.$wrap.appendTo(_config.container));
 
-            mask({element:this.$mask,maskStyle:_config.maskStyle});
-
 
             // _config.buttons && $.each(_config.buttons, function(key){
             //     btns.push({
@@ -77,6 +75,13 @@
             //     });
             // });
 
+            this.show();
+
+        },
+        show: function() {
+            var _config = this.config;
+
+            mask({element:this.$mask,maskStyle:_config.maskStyle});
 
             if (_config.isFixed) {
                 position({
@@ -93,15 +98,14 @@
                 });
             }
 
-        },
-        show: function() {
-            var _config = this.config;
+            $('html').addClass('alpha');
             _config.hasMask && this.$mask.css('display', 'block');
             this.$wrap.css('display', 'block');
         },
         hide: function() {
             var _config = this.config;
 
+            $('html').removeClass('alpha');
             _config.hasMask && this.$mask.css('display', 'none');
             this.$wrap.css('display', 'none');
         },

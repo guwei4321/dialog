@@ -44,7 +44,8 @@
                     '</div>' +
                     '<div class="ui-dialog-body">{{d.body}}</div>' +
                     '<div class="ui-dialog-footer">{{d.footer}}</div>'
-            }
+            },
+            callback: null,
         }, config);
     }
     $.extend(Dialog.prototype, {
@@ -66,17 +67,15 @@
 
             $(_content).appendTo(this.$wrap.appendTo(_config.container));
 
-            mask({element:this.$mask,maskStyle:_config.maskStyle});
+            _config.hasMask && mask({element:this.$mask,maskStyle:_config.maskStyle});
 
+            _config.callback && _config.callback();
 
-            // _config.buttons && $.each(_config.buttons, function(key){
-            //     btns.push({
-            //         index: ++i,
-            //         text: key,
-            //         key: key
-            //     });
-            // });
+            this.show();
 
+        },
+        show: function() {
+            var _config = this.config;
 
             if (_config.isFixed) {
                 position({
@@ -93,9 +92,6 @@
                 });
             }
 
-        },
-        show: function() {
-            var _config = this.config;
             _config.hasMask && this.$mask.css('display', 'block');
             this.$wrap.css('display', 'block');
         },
@@ -106,7 +102,10 @@
             this.$wrap.css('display', 'none');
         },
         destory: function() {
+            var _config = this.config;
 
+            _config.hasMask && this.$mask.remove();
+            this.$wrap.remove();
         }
     })
     return Dialog;

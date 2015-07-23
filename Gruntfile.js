@@ -47,13 +47,13 @@ module.exports = function(grunt) {
                 },
                 sourceMap: ''
             },
-            position: {
+            dialog: {
                 options: {
-                    mainConfigFile: "dist/common.js",
-                    name: "position",
-                    // exclude: ["comboData"],
-                    include: ["common", "position"],
-                    out: "build/static/position.js"
+                    mainConfigFile: "dist/jquery.dialog/common.js",
+                    name: "dialog",
+                    exclude: ["jquery"],
+                    include: ["jquery.dialog/common.js", "position", "mask", 'simpletpl', 'dialog'],
+                    out: "build/static/dialog.js"
                 }
             }
         }
