@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <title>前端组件</title>
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <style>
+        .ui-dialog {position: absolute;}
+    </style>
 </head>
 <body>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br>3123123<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>3123123<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>3123123<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <script src="dist/lib/require.js"></script>
 <script>
     requirejs.config({
@@ -22,28 +25,27 @@
     require([ 'zepto', 'dialog', 'position'], function(zepto, Dialog, Position) {
 
         var dialog1 = new Dialog({
+            // hasMask: false,
             isFixed: true,
-            title: '弹窗',
-            data: {
-                title: {
-                    text: '标题'
-                },
-                list: [{name: '贤心', city: '杭州'},  {name: '谢亮', city: '北京'}, {name: '浅浅', city: '杭州'}, {name: 'Dem', city: '北京'}]
-            },
-            tpl: {
-                mask: '<div class="ui-mask"></div>',
-                content: '<div class="ui-dialog-header">' +
-                    '<div class="ui-dialog-title">{{d.data.title.text}}</div>' +
-                    '</div>' +
-                    '<div class="ui-dialog-body">' +
-                    '{{# for(var i = 0, len = d.data.list.length; i < len; i++){ }}' +
-                        '<li>' +
-                            '<span>{{ d.data.list[i].name }}</span>' +
-                            '<span>所在城市：{{ d.data.list[i].city }}</span>' +
-                        '</li>' +
-                    '{{# } }}' +
-                    '</div>'+
-                    '<div class="ui-dialog-footer">{{d.footer}}</div>'
+            closeBtn: false,
+            // title: '标题',
+            content: '内容',
+            // footer: '底部',
+            // tplContent: '<div class="ui-dialog-header">' +
+            //         '<div class="ui-dialog-title">{{d.data.title.text}}</div>' +
+            //         '</div>' +
+            //         '<div class="ui-dialog-body">' +
+            //         '{{# for(var i = 0, len = d.data.list.length; i < len; i++){ }}' +
+            //             '<li>' +
+            //                 '<span>{{ d.data.list[i].name }}</span>' +
+            //                 '<span>所在城市：{{ d.data.list[i].city }}</span>' +
+            //             '</li>' +
+            //         '{{# } }}' +
+            //         '</div>'+
+            //         '<div class="ui-dialog-footer">{{d.footer}}</div>',
+            callback: function(){
+                var _this = this;
+                console.log(_this)
             }
         });
         dialog1.setup();

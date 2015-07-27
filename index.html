@@ -51,39 +51,32 @@
     require([ 'lib/jquery', 'dialog', 'position'], function(jquery, Dialog, Position) {
 
         var dialog1 = new Dialog({
-            title: '弹窗',
+            hasMask: false,
             isFixed: true,
-            hasMask: false, // 是否显示遮罩层
-            data: {
-                title: {
-                    text: '标题'
-                },
+            closeBtn: false,
+            // title: '标题',
+            content: {
                 list: [{name: '贤心', city: '杭州'},  {name: '谢亮', city: '北京'}, {name: '浅浅', city: '杭州'}, {name: 'Dem', city: '北京'}]
             },
-            tpl: {
-                mask: '<div class="ui-mask"></div>',
-                content: '<div class="ui-dialog-header">' +
-                    '<div class="ui-dialog-title">{{d.data.title.text}}</div>' +
-                    '</div>' +
-                    '<div class="ui-dialog-body">' +
-                    '{{# for(var i = 0, len = d.data.list.length; i < len; i++){ }}' +
-                        '<li class="city">' +
-                            '<span>{{ d.data.list[i].name }}</span>' +
-                            '<span>所在城市：{{ d.data.list[i].city }}</span>' +
-                        '</li>' +
-                    '{{# } }}' +
-                    '</div>'+
-                    '<div class="ui-dialog-footer">{{d.footer}}</div>'
-            },
+            // footer: '底部',
+            // tplContent: '<div class="ui-dialog-header">' +
+            //         '<div class="ui-dialog-title">{{d.data.title.text}}</div>' +
+            //         '</div>' +
+            //         '<div class="ui-dialog-body">' +
+            //         '{{# for(var i = 0, len = d.data.list.length; i < len; i++){ }}' +
+            //             '<li>' +
+            //                 '<span>{{ d.data.list[i].name }}</span>' +
+            //                 '<span>所在城市：{{ d.data.list[i].city }}</span>' +
+            //             '</li>' +
+            //         '{{# } }}' +
+            //         '</div>'+
+            //         '<div class="ui-dialog-footer">{{d.footer}}</div>',
             callback: function(){
                 var _this = this;
-
+                console.log(_this)
             }
         });
         dialog1.setup();
-        $('body').on('click', '.city', function(){
-            dialog1.hide();
-        })
         // dialog1.hide();
     })
 
