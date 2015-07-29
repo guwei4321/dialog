@@ -47,13 +47,22 @@ module.exports = function(grunt) {
                 },
                 sourceMap: ''
             },
-            dialog: {
+            jqueryDialog: {
                 options: {
                     mainConfigFile: "dist/jquery.dialog/common.js",
                     name: "dialog",
                     exclude: ["jquery"],
                     include: ["jquery.dialog/common.js", "position", "mask", 'simpletpl', 'dialog'],
-                    out: "build/static/dialog.js"
+                    out: "build/static/jquery-dialog.js"
+                }
+            },
+            zeptoDialog: {
+                options: {
+                    mainConfigFile: "dist/zepto.dialog/common.js",
+                    name: "dialog",
+                    exclude: ["zepto"],
+                    include: ["zepto.dialog/common.js", "position", "mask", 'simpletpl', 'dialog'],
+                    out: "build/static/zepto-dialog.js"
                 }
             }
         }

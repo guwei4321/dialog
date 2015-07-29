@@ -26,7 +26,7 @@
 <p>文字</p><p>文字</p><p>文字</p><p>文字</p><p>文字</p><p>文字</p>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <script src="dist/lib/require.js"></script>
-<script src="build/static/position.js"></script>
+<script src="build/static/dialog.js"></script>
 <script>
     // require(['lib/jquery', 'dialog', 'position'], function(jquery, Dialog, Position) {
 
@@ -39,13 +39,54 @@
     //     // dialog1.hide();
     // })
 
-    require(['jquery', 'position'], function(jquery, Position) {
-        Position({
-            baseAlign: '50% 50%',
-            parentAlign: '50% 50%',
-            parentElement: '#container',
-            baseElement: '#box-4'
+    // require(['jquery', 'position'], function(jquery, Position) {
+        // Position({
+        //     baseAlign: '50% 50%',
+        //     parentAlign: '50% 50%',
+        //     parentElement: '#container',
+        //     baseElement: '#box-4'
+        // });
+    // })
+    requirejs.config({
+        baseUrl: './dist',
+        paths: {
+            jquery: 'lib/jquery',
+            simpletpl: 'extend/simpletpl',
+            position: 'jquery.dialog/position',
+            mask: 'jquery.dialog/mask',
+            dialog: 'jquery.dialog/dialog'
+        }
+    })
+    require([ 'jquery', 'dialog', 'position'], function(jquery, Dialog, Position) {
+        console.log(Position)
+        var dialog1 = new Dialog({
+            hasMask: false,
+            isFixed: true,
+            closeBtn: false,
+            // title: '标题',
+            content: {
+                list: [{name: '贤心', city: '杭州'},  {name: '谢亮', city: '北京'}, {name: '浅浅', city: '杭州'}, {name: 'Dem', city: '北京'}]
+            },
+            // footer: '底部',
+            // tplContent: '<div class="ui-dialog-header">' +
+            //         '<div class="ui-dialog-title">{{d.data.title.text}}</div>' +
+            //         '</div>' +
+            //         '<div class="ui-dialog-body">' +
+            //         '{{# for(var i = 0, len = d.data.list.length; i < len; i++){ }}' +
+            //             '<li>' +
+            //                 '<span>{{ d.data.list[i].name }}</span>' +
+            //                 '<span>所在城市：{{ d.data.list[i].city }}</span>' +
+            //             '</li>' +
+            //         '{{# } }}' +
+            //         '</div>'+
+            //         '<div class="ui-dialog-footer">{{d.footer}}</div>',
+            callback: function(){
+                var _this = this;
+                console.log(_this)
+            }
         });
+        dialog1.setup();
+        // dialog1.hide();
     })
 </script>
 </body>

@@ -1,0 +1,51 @@
+.ui-dialog {
+    border-radius: 7px;
+    width: 270px;
+    text-align: center;
+    background-color: #fff;
+}
+.ui-dialog-header {
+    margin: 15px;
+}
+.ui-dialog-title{
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+}
+.ui-dialog-body {
+    margin: 20px 15px 15px;
+}
+.ui-dialog-footer {
+    height: 44px;
+    border-top: 1px solid #b5b5b5;
+    overflow: hidden;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+.ui-dialog-footer span {
+    border-radius: 7px;
+    width: 100%;
+    padding: 0 5px;
+    height: 44px;
+    font-size: 17px;
+    line-height: 44px;
+    text-align: center;
+    color: #007aff;
+    display: block;
+    position: relative;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+}

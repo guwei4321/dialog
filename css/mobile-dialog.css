@@ -1,0 +1,17 @@
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.15);
+  -webkit-touch-callout: none;
+}
+.alpha {
+    height: 100%;
+    overflow: hidden;
+}
+.ui-mask{
+    position: absolute;
+    z-index: 100;
+}
+.ui-dialog {
+    position: absolute;
+    z-index: 100;
+}
+

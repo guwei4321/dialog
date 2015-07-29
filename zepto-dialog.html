@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <title>前端组件</title>
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <style>
-        .ui-dialog {position: absolute;}
-    </style>
+    <link rel="stylesheet" href="css/mobile-dialog.css">
+    <link rel="stylesheet" href="css/theme-ios7.css">
 </head>
 <body>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>3123123<br><br><br><br><br><br><br>
+<button id="J_Btn">点击</button>
+<button id="J_Btn1">点击1</button>
 <br><br><br>3123123<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>3123123<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>3123123<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <script src="dist/lib/require.js"></script>
 <script>
@@ -24,31 +26,46 @@
     })
     require([ 'zepto', 'dialog', 'position'], function(zepto, Dialog, Position) {
 
-        var dialog1 = new Dialog({
-            // hasMask: false,
-            isFixed: true,
-            closeBtn: false,
-            // title: '标题',
-            content: '内容',
-            // footer: '底部',
-            // tplContent: '<div class="ui-dialog-header">' +
-            //         '<div class="ui-dialog-title">{{d.data.title.text}}</div>' +
-            //         '</div>' +
-            //         '<div class="ui-dialog-body">' +
-            //         '{{# for(var i = 0, len = d.data.list.length; i < len; i++){ }}' +
-            //             '<li>' +
-            //                 '<span>{{ d.data.list[i].name }}</span>' +
-            //                 '<span>所在城市：{{ d.data.list[i].city }}</span>' +
-            //             '</li>' +
-            //         '{{# } }}' +
-            //         '</div>'+
-            //         '<div class="ui-dialog-footer">{{d.footer}}</div>',
-            callback: function(){
-                var _this = this;
-                console.log(_this)
-            }
+        var tlIndex = 1,
+            dialog1 = new Dialog({
+                // hasMask: false,
+                isFixed: true,
+                closeBtn: true,
+                // title: '标题',
+                content: {
+                    'a' : '客户要求变更量房时间'+tlIndex,
+                    'b' : '经确认是局部装修，返回公司跟进'
+                },
+                tplContent: '<div class="dialog-fail"><ul class="radio-list">'+
+                            '{{# for(var key in d.content){ }}'+
+                                '<li><input id="{{key}}" name="summary" type="radio" value="{{key}}" /><i></i><label for="{{key}}">{{d.content[key]}}</label></li>'+
+                            '{{#} }}'+
+                            '</ul><div class="btn-full-submit">确定</div></div>',
+                classWrap: 'dialog-success'
+            }),
+            dialog2 = new Dialog();
+        $('#J_Btn').on('tap',function(){
+            tlIndex++;
+            dialog1.setup({
+                content: {
+                    'a' : '客户要求变更量房时间'+tlIndex,
+                    'b' : '经确认是局部装修，返回公司跟进'
+                }
+            });
         });
-        dialog1.setup();
+        $('#J_Btn1').on('tap',function(){
+            dialog2.alert({title: '提示',content: '请留下您的手机号码'});
+            dialog2.$wrap.on('cancel', function(){
+                console.log('点击了取消按钮');
+            })
+        });
+        $('body').on('tap', '.dialog-success', function(){
+            dialog1.hide();
+        }).on('tap', '.dialog-success .ui-icon-dialog-close', function(){
+            dialog1.destory();
+        })
+        console.log(dialog2)
+        console.log($.os.ios)
         // dialog1.hide();
     })
 </script>
