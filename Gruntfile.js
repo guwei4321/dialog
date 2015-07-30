@@ -6,23 +6,12 @@ module.exports = function(grunt) {
     // 项目配置
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        watch: {
-            compass: {
-                files: ['./sass/{*,*/}*.scss'],
-                tasks: ['compass:main']
-            }
+        clean: {
+            src: ['src'],
         },
-        compass: {
-            main: {
-                options: {
-                    http_path: "/",
-                    sassDir: 'sass',
-                    cssDir: 'css',
-                    imagesDir: 'images',
-                    relativeAssets: true,
-                    noLineComments: true,
-                    assetCacheBuster: false
-                }
+        qunit: {
+            target: {
+                src: ['test/**/*.html']
             }
         },
         requirejs: {
@@ -53,7 +42,7 @@ module.exports = function(grunt) {
                     name: "dialog",
                     exclude: ["jquery"],
                     include: ["jquery.dialog/common.js", "position", "mask", 'simpletpl', 'dialog'],
-                    out: "build/static/jquery-dialog.js"
+                    out: "src/jquery-dialog.js"
                 }
             },
             zeptoDialog: {
@@ -62,11 +51,15 @@ module.exports = function(grunt) {
                     name: "dialog",
                     exclude: ["zepto"],
                     include: ["zepto.dialog/common.js", "position", "mask", 'simpletpl', 'dialog'],
-                    out: "build/static/zepto-dialog.js"
+                    out: "src/zepto-dialog.js"
                 }
             }
         }
     });
 
-    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('build', [
+        'clean:src',
+        'requirejs'
+    ]);
+
 };

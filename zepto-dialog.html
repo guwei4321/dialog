@@ -9,9 +9,13 @@
 </head>
 <body>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>3123123<br><br><br><br><br><br><br>
-<button id="J_Btn">点击</button>
-<button id="J_Btn1">点击1</button>
+<button id="J_Btn1">alert弹窗</button>
+<button id="J_Btn2">confrim弹窗</button>
+<button id="J_Btn3">popover成功弹窗</button>
+<button id="J_Btn4">popover错误弹窗</button>
+<button id="J_Btn5">popoverloading弹窗</button>
 <br><br><br>3123123<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>3123123<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>3123123<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
 <script src="dist/lib/require.js"></script>
 <script>
     requirejs.config({
@@ -26,47 +30,38 @@
     })
     require([ 'zepto', 'dialog', 'position'], function(zepto, Dialog, Position) {
 
-        var tlIndex = 1,
-            dialog1 = new Dialog({
-                // hasMask: false,
-                isFixed: true,
-                closeBtn: true,
-                // title: '标题',
-                content: {
-                    'a' : '客户要求变更量房时间'+tlIndex,
-                    'b' : '经确认是局部装修，返回公司跟进'
-                },
-                tplContent: '<div class="dialog-fail"><ul class="radio-list">'+
-                            '{{# for(var key in d.content){ }}'+
-                                '<li><input id="{{key}}" name="summary" type="radio" value="{{key}}" /><i></i><label for="{{key}}">{{d.content[key]}}</label></li>'+
-                            '{{#} }}'+
-                            '</ul><div class="btn-full-submit">确定</div></div>',
-                classWrap: 'dialog-success'
-            }),
-            dialog2 = new Dialog();
-        $('#J_Btn').on('tap',function(){
-            tlIndex++;
-            dialog1.setup({
-                content: {
-                    'a' : '客户要求变更量房时间'+tlIndex,
-                    'b' : '经确认是局部装修，返回公司跟进'
-                }
-            });
-        });
+        var alert = new Dialog(),
+            confrim = new Dialog(),
+            popover = new Dialog();
         $('#J_Btn1').on('tap',function(){
-            dialog2.alert({title: '提示',content: '请留下您的手机号码'});
-            dialog2.$wrap.on('cancel', function(){
+            alert.alert({content: '请留下您的手机号码'});
+            alert.$wrap.on('close', function(){
                 console.log('点击了取消按钮');
             })
         });
+        $('#J_Btn2').on('tap',function(){
+            confrim.confrim({content: '请留下您的手机号码'});
+            confrim.$wrap.on('closeLeft', function(){
+                console.log('点击了左边按钮');
+            })
+            confrim.$wrap.on('closeRight', function(){
+                console.log('点击了右边按钮');
+            })
+        });
+        $('#J_Btn3').on('tap',function(){
+            popover.popover({content: '成功',classWrap:'ui-dialog-success'});
+        });
+        $('#J_Btn4').on('tap',function(){
+            popover.popover({content: '错误',classWrap:'ui-dialog-error'});
+        });
+        $('#J_Btn5').on('tap',function(){
+            popover.popover({content: '加载中...',classWrap:'ui-dialog-loading'});
+        });
         $('body').on('tap', '.dialog-success', function(){
-            dialog1.hide();
+            alert.hide();
         }).on('tap', '.dialog-success .ui-icon-dialog-close', function(){
-            dialog1.destory();
+            alert.destory();
         })
-        console.log(dialog2)
-        console.log($.os.ios)
-        // dialog1.hide();
     })
 </script>
 </body>
