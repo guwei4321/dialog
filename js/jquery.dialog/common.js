@@ -1,7 +1,7 @@
 requirejs.config({
-    baseUrl: './dist',
+    baseUrl: './js',
     paths: {
-        jquery: 'lib/jquery',
+        jquery: '../lib/jquery',
         simpletpl: 'extend/simpletpl',
         position: 'jquery.dialog/position',
         mask: 'jquery.dialog/mask',

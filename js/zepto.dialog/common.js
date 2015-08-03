@@ -1,7 +1,7 @@
 requirejs.config({
-    baseUrl: './dist',
+    baseUrl: './js',
     paths: {
-        zepto: 'lib/zepto',
+        zepto: '../lib/zepto',
         simpletpl: 'extend/simpletpl',
         position: 'zepto.dialog/position',
         mask: 'zepto.dialog/mask',

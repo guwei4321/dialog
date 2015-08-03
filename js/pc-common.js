@@ -1,5 +1,5 @@
 requirejs.config({
-    baseUrl: './dist',
+    baseUrl: './js',
     paths: {
         simpletpl: 'extend/simpletpl',
         position: 'jquery.dialog/position',
